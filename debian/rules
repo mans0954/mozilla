@@ -1,0 +1,60 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#export DH_VERBOSE = 1
+
+
+# see FEATURE AREAS in dpkg-buildflags(1)
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+# see ENVIRONMENT in dpkg-buildflags(1)
+# package maintainers to append CFLAGS
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+# package maintainers to append LDFLAGS
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+export DEB_CPPFLAGS_MAINT_APPEND  = -fpermissive
+export DEB_LDFLAGS_MAINT_APPEND = -ldl
+
+export PRINCEBASE = $(shell pwd)
+export HOST = windows
+#MOZCONFIG=$PRINCEBASE/mozilla/mozconfigs/$HOST/PrinceRelease.mozconfig
+export MOZCONFIG = ${PRINCEBASE}/mozilla/mozconfigs/${HOST}/PrinceRelease.mozconfig
+export PROD_SW = 1
+export MOZILLAMODE = release
+export PROD_TEX = 1
+
+%:
+	dh  $@ --with autoreconf
+
+
+# dh_make generated override targets
+# This is example for Cmake (See https://bugs.debian.org/641051 )
+#override_dh_auto_configure:
+#	dh_auto_configure -- #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
+
+
+override_dh_autoreconf:
+	autoreconf2.13
+	
+#	dh_autoreconf
+	
+#	cd mozilla && autoreconf2.13 --verbose
+
+
+
+override_dh_auto_configure:
+	echo CSHOSKIN auto_configure
+	echo CSHOSKIN
+	echo $$PRINCEBASE
+	echo $$HOST
+	echo $$MOZCONFIG
+	echo $$PROD_SW
+	echo $$PROD_TEX
+
+#	make -f client.mk depend
+
+override_dh_auto_build:
+	mkdir mozilla
+	find . -maxdepth 1 -mindepth 1 -not -name mozilla -not -name debian -exec mv '{}' mozilla/ \;
+	make -f mozilla/client.mk build

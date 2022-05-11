@@ -1,0 +1,22 @@
+--- a/configure
++++ b/configure
+@@ -6189,7 +6189,7 @@
+                                       # when using DWARF2 as the debugging
+                                       # format)
+ 
+-    MOZ_MEMORY=1
++#    MOZ_MEMORY=1
+ 
+     case "${target_cpu}" in
+     alpha*)
+--- a/configure.in
++++ b/configure.in
+@@ -1737,7 +1737,7 @@
+                                       # when using DWARF2 as the debugging
+                                       # format)
+ 
+-    MOZ_MEMORY=1
++#    MOZ_MEMORY=1
+ 
+     case "${target_cpu}" in
+     alpha*)

@@ -1,0 +1,55 @@
+Source: scientific-word
+Section: unknown
+Priority: optional
+Maintainer: Christopher Hoskin <mans0954@debian.org>
+Build-Depends: debhelper-compat (= 12), autotools-dev,
+ python,
+ zip,
+ libgtk2.0-dev,
+ libdbus-glib-1-dev,
+ libidl-dev,
+ libxt-dev,
+ libfreetype6-dev,
+ libpangox-1.0-dev,
+ autoconf2.13,
+# libx11-dev,
+# libx11-xcb-dev,
+# libglib2.0-dev,
+# libdrm-dev,
+# libstartup-notification0-dev,
+# libjpeg-dev,
+# zlib1g-dev,
+# libreadline-dev,
+# dpkg-dev,
+# libvpx-dev (>= 1.8.0),
+# libffi-dev,
+# libevent-dev,
+# libpulse-dev,
+# libasound2-dev,
+# yasm,
+# nasm (>= 2.14) [amd64 i386],
+# rustc (>= 1.51),
+# cargo (>= 0.47),
+# llvm-dev,
+# libclang-dev,
+# clang,
+# nodejs (>= 10),
+# unzip,
+# locales,
+# xvfb,
+# xfonts-base,
+# xauth,
+# ttf-bitstream-vera,
+# fonts-freefont-ttf,
+# fonts-dejima-mincho,
+# iso-codes
+Standards-Version: 4.4.1
+Homepage: <insert the upstream URL, if relevant>
+#Vcs-Browser: https://salsa.debian.org/debian/scientific-word
+#Vcs-Git: https://salsa.debian.org/debian/scientific-word.git
+
+Package: scientific-word
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>

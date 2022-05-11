@@ -1,0 +1,33 @@
+--- a/content/base/src/nsSyncLoadService.cpp
++++ b/content/base/src/nsSyncLoadService.cpp
+@@ -45,7 +45,7 @@
+ #include "nsIChannel.h"
+ #include "nsIDOMLoadListener.h"
+ #include "nsIChannelEventSink.h"
+-#include "nsIInterfaceRequestor.h"s
++#include "nsIInterfaceRequestor.h"
+ #include "nsString.h"
+ #include "nsWeakReference.h"
+ #include "nsIDocument.h"
+--- a/editor/msiediting/src/coalesce/msiBigOpCoalesce.cpp
++++ b/editor/msiediting/src/coalesce/msiBigOpCoalesce.cpp
+@@ -7,7 +7,7 @@
+ #include "nsCOMPtr.h"
+ #include "nsIDOMNode.h"
+ #include "nsIEditor.h"
+-#include "nsIMutableArray.h"s
++#include "nsIMutableArray.h"
+ #include "msiEditingAtoms.h"
+ #include "nsIDOMText.h"
+ #include "nsIDOMCharacterData.h"
+--- a/layout/generic/nsFrame.cpp
++++ b/layout/generic/nsFrame.cpp
+@@ -2656,7 +2656,7 @@
+     return FrameTarget::Null();
+   }
+   if (closestFromLeft && !closestFromRight) 
+-    return FrameTarget::FrameTarget(closestFromLeft, PR_TRUE, PR_TRUE);
++    return FrameTarget::Null(); //return FrameTarget::FrameTarget(closestFromLeft, PR_TRUE, PR_TRUE);
+   else if (closestFromLeft && (abs(aPoint.x - closestLeft) <= abs(aPoint.x - closestRight))) {
+     return GetSelectionClosestFrameForChild(closestFromLeft, aPoint);
+   }
