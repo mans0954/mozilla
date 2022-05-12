@@ -16,7 +16,7 @@
 export DEB_CPPFLAGS_MAINT_APPEND  = -fpermissive
 export DEB_LDFLAGS_MAINT_APPEND = -ldl
 
-export PRINCEBASE = $(shell pwd)
+export PRINCEBASE = $(shell pwd)/level1/level2
 export HOST = windows
 #MOZCONFIG=$PRINCEBASE/mozilla/mozconfigs/$HOST/PrinceRelease.mozconfig
 export MOZCONFIG = ${PRINCEBASE}/mozilla/mozconfigs/${HOST}/PrinceRelease.mozconfig
@@ -54,7 +54,13 @@ override_dh_auto_configure:
 
 #	make -f client.mk depend
 
+# A bit ugly but will do for now
 override_dh_auto_build:
 	mkdir mozilla
 	find . -maxdepth 1 -mindepth 1 -not -name mozilla -not -name debian -exec mv '{}' mozilla/ \;
 	make -f mozilla/client.mk build
+# This almost works, but runs into trouble as `level1/level2/mozilla/../release/xulrunner` 
+# isn't evaluated correctly
+#	mkdir -p level1/level2
+#	ln -s ../../ level1/level2/mozilla
+#	cd level1/level2 && make -f mozilla/client.mk build
