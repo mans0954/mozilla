@@ -1,6 +1,6 @@
 --- a/configure.in
 +++ b/configure.in
-@@ -4149,8 +4149,8 @@
+@@ -4150,8 +4150,8 @@
  MOZ_ENABLE_CANVAS=1
  MOZ_EXTENSIONS_ALL=" wallet xml-rpc venkman inspector irc typeaheadfind gnomevfs sroaming datetime finger cview layout-debug tasks sql xforms schema-validation reporter"
  MOZ_FEEDS=1

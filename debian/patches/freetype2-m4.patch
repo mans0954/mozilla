@@ -10,7 +10,7 @@
  define(MOZ_TOPSRCDIR,.)dnl MOZ_TOPSRCDIR is used in altoptions.m4
 --- a/configure.in
 +++ b/configure.in
-@@ -2984,7 +2984,7 @@
+@@ -2985,7 +2985,7 @@
      dnl ========================================================
      dnl = Check for freetype2 and its functionality
      dnl ========================================================
