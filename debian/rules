@@ -13,7 +13,7 @@
 # package maintainers to append LDFLAGS
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-export DEB_CPPFLAGS_MAINT_APPEND  = -fpermissive
+export DEB_CPPFLAGS_MAINT_APPEND  = -fpermissive -DHAVE_STDINT_H -DHAVE_INTTYPES_H
 export DEB_LDFLAGS_MAINT_APPEND = -ldl
 
 export PRINCEBASE = $(shell pwd)
@@ -26,7 +26,7 @@ export MOZILLAMODE = release
 export PROD_TEX = 1
 
 %:
-	dh  $@ --with autoreconf
+	dh  $@
 
 
 # dh_make generated override targets
@@ -37,8 +37,6 @@ export PROD_TEX = 1
 
 override_dh_autoreconf:
 	autoreconf2.13
-	
-#	dh_autoreconf
 	
 #	cd mozilla && autoreconf2.13 --verbose
 
