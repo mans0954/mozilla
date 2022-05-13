@@ -1,4 +1,4 @@
-export CPPFLAGS="-fpermissive -DHAVE_STDINT_H -DHAVE_INTTYPES_H"
+export CPPFLAGS="-fpermissive -DHAVE_STDINT_H -DHAVE_INTTYPES_H -Wno-error=narrowing"
 export LDFLAGS="-ldl"
 
 export PRINCEBASE=${HOME}/src/
