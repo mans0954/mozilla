@@ -1,0 +1,9 @@
+export CPPFLAGS="-fpermissive -DHAVE_STDINT_H -DHAVE_INTTYPES_H"
+export LDFLAGS="-ldl"
+
+export PRINCEBASE=${HOME}/src/
+export HOST=windows
+export MOZCONFIG=${PRINCEBASE}/mozilla/mozconfigs/${HOST}/PrinceRelease.mozconfig
+export PROD_SW=1
+export MOZILLAMODE=release
+export PROD_TEX=1
