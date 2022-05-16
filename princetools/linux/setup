@@ -7,3 +7,6 @@ export MOZCONFIG=${PRINCEBASE}/mozilla/mozconfigs/${HOST}/PrinceRelease.mozconfi
 export PROD_SW=1
 export MOZILLAMODE=release
 export PROD_TEX=1
+export SHORTNAME=SW
+export PRINCEPROD=SW
+
