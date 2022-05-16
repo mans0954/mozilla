@@ -3,6 +3,7 @@
 On Ubuntu 20.04:
 
 ```
+sudo apt install zip libgtk2.0-dev libdbus-glib-1-dev libidl-dev libxt-dev libfreetype6-dev libpangox-1.0-dev autoconf2.13
 mkdir -p ~/src
 cd ~/src
 git clone https://github.com/ScientificWord/mozilla.git
