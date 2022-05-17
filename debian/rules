@@ -36,6 +36,7 @@ export PROD_TEX = 1
 
 
 override_dh_autoreconf:
+	mv aclocal.m4 acinclude.m4
 	autoreconf2.13
 	
 #	cd mozilla && autoreconf2.13 --verbose
