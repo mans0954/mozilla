@@ -18,7 +18,7 @@ export DEB_LDFLAGS_MAINT_APPEND = -ldl
 
 export PRINCEBASE = $(shell pwd)
 #export PRINCEBASE = $(shell pwd)/level1/level2
-export HOST = windows
+export HOST = linux
 #MOZCONFIG=$PRINCEBASE/mozilla/mozconfigs/$HOST/PrinceRelease.mozconfig
 export MOZCONFIG = ${PRINCEBASE}/mozilla/mozconfigs/${HOST}/PrinceRelease.mozconfig
 export PROD_SW = 1
