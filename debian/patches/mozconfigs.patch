@@ -19,7 +19,7 @@
 +ac_add_options --enable-chrome-format=flat
 --- /dev/null
 +++ b/mozconfigs/linux/PrinceRelease.mozconfig
-@@ -0,0 +1,15 @@
+@@ -0,0 +1,17 @@
 +# sh
 +# Build configuration script
 +#
@@ -32,6 +32,8 @@
 +
 +
 +. $topsrcdir/prince/config/mozconfig
++
++ac_add_options --with-system-nss
 +
 +mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../release
 +mk_add_options MOZ_MAKE_FLAGS=" -j4"
