@@ -1,0 +1,12 @@
+export CPPFLAGS="-fpermissive -DHAVE_STDINT_H -DHAVE_INTTYPES_H -Wno-error=narrowing -I/usr/include/freetype2/ft2build.h"
+export LDFLAGS="-ldl"
+
+export PRINCEBASE=${HOME}/src/sciword2
+export HOST=linux
+export MOZCONFIG=${PRINCEBASE}/mozilla/mozconfigs/${HOST}/PrinceRelease.mozconfig
+export PROD_SW=1
+export MOZILLAMODE=release
+export PROD_TEX=1
+export SHORTNAME=SW
+export PRINCEPROD=SW
+
