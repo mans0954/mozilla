@@ -1,5 +1,5 @@
 export CPPFLAGS="-fpermissive -DHAVE_STDINT_H -DHAVE_INTTYPES_H -Wno-error=narrowing -I/usr/include/freetype2/"
-export LDFLAGS="-ldl"
+#export LDFLAGS="-ldl"
 
 export PRINCEBASE=${HOME}/src/sciword2
 export HOST=linux

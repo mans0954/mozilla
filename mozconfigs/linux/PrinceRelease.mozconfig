@@ -11,6 +11,10 @@
 
 . $topsrcdir/prince/config/mozconfig
 
+export LDFLAGS="-fsanitize=address -ldl"
+export HOST_LDFLAGS="-ldl"
+
+
 ac_add_options --with-system-nss
 
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../release
