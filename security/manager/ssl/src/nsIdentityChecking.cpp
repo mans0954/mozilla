@@ -67,6 +67,13 @@ NSSCleanupAutoPtrClass_WithParam(SECItem, SECITEM_FreeItem, TrueParam, PR_TRUE)
 #define CONST_OID static const unsigned char
 #define OI(x) { siDEROID, (unsigned char *)x, sizeof x }
 
+#define CERT_REV_FLAG_OCSP              1
+#define CERT_REV_FLAG_OCSP_LEAF_ONLY    2
+#define CERT_REV_FLAG_CRL               4
+#define CERT_REV_FLAG_CRL_LEAF_ONLY     8
+#define CERT_REV_FAIL_SOFT_OCSP         0x10
+#define CERT_REV_FAIL_SOFT_CRL          0x20
+
 struct nsMyTrustedEVInfo
 {
   const char *dotted_oid;
