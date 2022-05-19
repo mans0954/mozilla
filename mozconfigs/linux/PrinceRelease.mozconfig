@@ -11,7 +11,7 @@
 
 . $topsrcdir/prince/config/mozconfig
 
-export LDFLAGS="-fsanitize=address -ldl"
+export LDFLAGS="-ldl"
 export HOST_LDFLAGS="-ldl"
 
 
