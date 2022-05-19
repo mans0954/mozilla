@@ -6189,7 +6189,7 @@ EOF
                                       # when using DWARF2 as the debugging
                                       # format)
 
-#    MOZ_MEMORY=1
+    MOZ_MEMORY=1
 
     case "${target_cpu}" in
     alpha*)
