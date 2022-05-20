@@ -11,6 +11,9 @@
 
 . $topsrcdir/prince/config/mozconfig
 
+CPPFLAGS="-fpermissive -DHAVE_STDINT_H -DHAVE_INTTYPES_H -Wno-error=narrowing -I/usr/include/freetype2/"
+HOST_CPPFLAGS="-fpermissive -DHAVE_STDINT_H -DHAVE_INTTYPES_H -Wno-error=narrowing -I/usr/include/freetype2/"
+
 export LDFLAGS="-ldl"
 export HOST_LDFLAGS="-ldl"
 
