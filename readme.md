@@ -12,6 +12,7 @@ source princetools/linux/setup
 autoconf2.13
 make -f client.mk build &> build.log
 tail -f build.log
+tail -f config.log # Detailed debug info
 ```
 
 (Currently failing)
