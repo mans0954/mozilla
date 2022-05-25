@@ -1,0 +1,18 @@
+**/*.so export-ignore
+**/*.so export-ignore
+**/*.pyo export-ignore
+**/*.o export-ignore
+**/*.jar export-ignore
+prince/utilities/Makefile.in~ export-ignore
+prince/utilities/linux/bin/convert export-ignore
+prince/utilities/linux/bin/python export-ignore
+prince/utilities/linux/bin/python2.7 export-ignore
+prince/utilities/linux/lib/libMagickCore.so.5.0.0 export-ignore
+prince/utilities/linux/lib/libpng12.so.0.18.0 export-ignore
+prince/utilities/linux/lib/libreadline.so.5.2 export-ignore
+prince/utilities/linux/lib/libpng12.so.0 export-ignore
+prince/utilities/linux/lib/libMagickCore.so.5 export-ignore
+filters/ptprince/funnelweb export-ignore
+**/*.exe export-ignore
+**/*.dll export-ignore
+embedding/browser/activex/src/pluginhostctrl/cab/redist/ATL.DLL
