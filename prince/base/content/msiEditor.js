@@ -4143,7 +4143,8 @@ function KeyPressCallback(aEvent)
           var xferable = Components.classes["@mozilla.org/widget/transferable;1"].
                          createInstance(Components.interfaces.nsITransferable);
           xferable.addDataFlavor("text/unicode");
-          var s = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+          var s = Components.classes["@mozilla.org/supports-string;1"].
+                  createInstance(Components.interfaces.nsISupportsString);
           s.data = selection;
           xferable.setTransferData("text/unicode", s, selection.length * 2);
           clipboardSvc.setData(xferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard);
@@ -4171,7 +4172,7 @@ function msiSetEditMode(mode, editorElement) {
   // must have editor if here!
   var editor = msiGetEditor(editorElement);
   var sourceIframe = document.getElementById("content-source");
-  sourceIframe.setAttribute("src", "resource://app/res/cm2.html");
+  var sourceEditor = sourceIframe.contentWindow.gEditor;
 
   // Switch the UI mode before inserting contents
   //   so user can't type in source window while new window is being filled
@@ -4193,8 +4194,7 @@ function msiSetEditMode(mode, editorElement) {
     var start = 0;
     sourceIframe.contentWindow.gChangeCallback = null; //onSourceChangeCallback;
 
-    var theme = GetStringPref("swp.sourceview.theme");
-    if (theme == null) theme = "elegant";
+    var theme = "neat";
     var tagManager = editor.tagListManager;
     var tagsArray = [].concat(
       tagManager.getTagsInClass('hidden', ',', false).split(','),
@@ -4206,7 +4206,7 @@ function msiSetEditMode(mode, editorElement) {
       tagManager.getTagsInClass('envtag', ',', false).split(','),
       tagManager.getTagsInClass('frontmtag', ',', false).split(','));
 
-    sourceIframe.contentWindow.installCodeMirror(KeyPressCallback, ChangeCallback, ActivityCallback,
+    sourceIframe.contentWindow./*wrappedJSObject.*/installCodeMirror(KeyPressCallback, ChangeCallback, ActivityCallback,
       theme,
       tagsArray,
       null);
@@ -4214,7 +4214,6 @@ function msiSetEditMode(mode, editorElement) {
     var lastEditableChild = editor.document.body.lastChild;
     if (lastEditableChild.nodeType == Node.TEXT_NODE)
       lastEditableChild.data = lastEditableChild.data.replace(/\s*$/, "\n");
-    var sourceEditor = sourceIframe.contentWindow.gEditor;
     sourceEditor.setValue(source.replace(/\r\n/g, "\n").replace(/\r/g, "\n"));
     sourceIframe.focus();
     sourceEditor.refresh();
