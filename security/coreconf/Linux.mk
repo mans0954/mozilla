@@ -147,6 +147,8 @@ ifeq ($(OS_RELEASE),2.0)
          sed -e 's,;+,,' -e 's; DATA ;;' -e 's,;;,,' -e 's,;.*,;,' > $@
 endif
 
+MKSHLIB         = $(CC) $(DSO_LDOPTS) -Wl,-soname -Wl,$(@:$(OBJDIR)/%.so=%.so) $(RPATH)
+
 ifdef BUILD_OPT
 ifeq (11,$(ALLOW_OPT_CODE_SIZE)$(OPT_CODE_SIZE))
 	OPTIMIZER = -Os

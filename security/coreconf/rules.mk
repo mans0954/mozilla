@@ -338,6 +338,7 @@ ifdef MT
 endif	# MSVC with manifest tool
 endif
 else
+	echo "CSH I AM HERE! LD: $(LD) OBJS: $(OBJS) MKSHLIB: $(MKSHLIB)"
 	$(MKSHLIB) -o $@ $(OBJS) $(SUB_SHLOBJS) $(LD_LIBS) $(EXTRA_LIBS) $(EXTRA_SHARED_LIBS) $(OS_LIBS)
 	chmod +x $@
 ifeq ($(OS_TARGET),Darwin)
