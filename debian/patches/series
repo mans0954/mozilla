@@ -1,3 +1,6 @@
+filecase.patch
+mkshlib.patch
+nss.patch
 mozconfigs.patch
 configure-in.patch
 #configure-in269.patch

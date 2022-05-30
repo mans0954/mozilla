@@ -1,0 +1,11 @@
+--- a/security/coreconf/Linux.mk
++++ b/security/coreconf/Linux.mk
+@@ -147,6 +147,8 @@
+          sed -e 's,;+,,' -e 's; DATA ;;' -e 's,;;,,' -e 's,;.*,;,' > $@
+ endif
+ 
++MKSHLIB         = $(CC) -shared -fpermissive -std=c++03 -Wl,-soname -Wl,$(@:$(OBJDIR)/%.so=%.so)
++
+ ifdef BUILD_OPT
+ ifeq (11,$(ALLOW_OPT_CODE_SIZE)$(OPT_CODE_SIZE))
+ 	OPTIMIZER = -Os
