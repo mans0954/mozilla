@@ -1,0 +1,20 @@
+--- a/filters/ptprince/Makefile.in
++++ b/filters/ptprince/Makefile.in
+@@ -106,7 +106,7 @@
+ endif
+ 
+ ifeq ($(OS_ARCH),Linux)
+-FW=funnelweb
++FW=/usr/bin/fw
+ DBGFLAGS += -g
+ endif
+ 
+@@ -117,7 +117,7 @@
+ 
+ 
+ $(CPPSRCS):$(FWSRCS)
+-	-$(srcdir)/$(FW) +t +D tex
++	-$(FW) +t +D tex
+ 
+ 
+ # why doesn't this work?

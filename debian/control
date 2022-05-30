@@ -12,7 +12,8 @@ Build-Depends: debhelper-compat (= 12), autotools-dev,
  libfreetype6-dev,
  libpangox-1.0-dev,
  autoconf2.13,
- libnss3-dev
+ libnss3-dev,
+ funnelweb
 # libx11-dev,
 # libx11-xcb-dev,
 # libglib2.0-dev,
