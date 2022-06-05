@@ -1,3 +1,3 @@
-release/prince/dist/bin /usr/lib/sw
-release/xulrunner/dist/bin /usr/lib/sw/xulrunner
-release/xulrunner/dist/bin/*.gmr /usr/lib/sw
+level1/level2/release/prince/dist/bin /usr/lib/sw
+level1/level2/release/xulrunner/dist/bin /usr/lib/sw/xulrunner
+level1/level2/release/xulrunner/dist/bin/*.gmr /usr/lib/sw
