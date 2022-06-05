@@ -47,6 +47,9 @@ override_dh_auto_build:
 	ln -s ../../ level1/level2/mozilla
 	cd level1/level2 && make -f mozilla/client.mk build
 
+override_dh_install:
+	dh_install  --sourcedir=level1/level2
+
 #override_dh_auto_install:
 #	pwd
 #	ls debian
