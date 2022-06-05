@@ -5,7 +5,7 @@ nss.patch
 mozconfigs.patch
 configure-in.patch
 #configure-in269.patch
-#memory.patch
+memory.patch
 coreconf.patch
 fixcode.patch
 freetype2-m4.patch
