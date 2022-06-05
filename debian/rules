@@ -14,43 +14,24 @@
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 export DEB_CPPFLAGS_MAINT_APPEND  = -fpermissive -DHAVE_STDINT_H -DHAVE_INTTYPES_H -Wno-error=narrowing -I/usr/include/freetype2/
-#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed -ldl
 
 export PRINCEBASE = $(shell pwd)
 #export PRINCEBASE = $(shell pwd)/level1/level2
 export HOST = linux
-#MOZCONFIG=$PRINCEBASE/mozilla/mozconfigs/$HOST/PrinceRelease.mozconfig
 export MOZCONFIG = ${PRINCEBASE}/mozilla/mozconfigs/${HOST}/PrinceRelease.mozconfig
 export PROD_SW = 1
 export MOZILLAMODE = release
 export PROD_TEX = 1
+export PRINCEPROD = sw
+export DESTDIR = /usr/lib
 
 %:
 	dh  $@
 
-
-# dh_make generated override targets
-# This is example for Cmake (See https://bugs.debian.org/641051 )
-#override_dh_auto_configure:
-#	dh_auto_configure -- #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
-
-
 override_dh_autoreconf:
-#	mv aclocal.m4 acinclude.m4
-#	autoreconf2.13
-	
-#	cd mozilla && autoreconf2.13 --verbose
-
-
 
 override_dh_auto_configure:
-	echo CSHOSKIN auto_configure
-	echo CSHOSKIN
-	echo $$PRINCEBASE
-	echo $$HOST
-	echo $$MOZCONFIG
-	echo $$PROD_SW
-	echo $$PROD_TEX
+
 
 #	make -f client.mk depend
 
@@ -59,9 +40,20 @@ override_dh_auto_build:
 	mkdir mozilla
 	find . -maxdepth 1 -mindepth 1 -not -name mozilla -not -name debian -exec mv '{}' mozilla/ \;
 	cp -r debian/memory mozilla/
+	pwd
+	mkdir debian/tmp
+	touch debian/tmp/hello
+	find debian/tmp
 	make -f mozilla/client.mk build
 # This almost works, but runs into trouble as `level1/level2/mozilla/../release/xulrunner` 
 # isn't evaluated correctly
 #	mkdir -p level1/level2
 #	ln -s ../../ level1/level2/mozilla
 #	cd level1/level2 && make -f mozilla/client.mk build
+
+#override_dh_auto_install:
+#	pwd
+#	ls debian
+#	find debian/tmp
+#	dh_auto_install
+#	./release/xulrunner/dist/bin/xulrunner --install-app $$PRINCEPROD "$$DESTDIR"/$$PRINCEPROD $$PRINCEPROD
