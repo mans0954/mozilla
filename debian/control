@@ -3,14 +3,14 @@ Section: unknown
 Priority: optional
 Maintainer: Christopher Hoskin <mans0954@debian.org>
 Build-Depends: debhelper-compat (= 12), autotools-dev,
- python,
+ python2,
  zip,
  libgtk2.0-dev,
  libdbus-glib-1-dev,
  libidl-dev,
  libxt-dev,
  libfreetype6-dev,
- libpangox-1.0-dev,
+# libpangox-1.0-dev,
  autoconf2.13,
  libnss3-dev,
  funnelweb

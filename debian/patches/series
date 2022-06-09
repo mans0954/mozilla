@@ -1,3 +1,5 @@
+pangox.patch
+configure.patch
 funnelweb.patch
 filecase.patch
 mkshlib.patch
