@@ -43,12 +43,13 @@ override_dh_auto_build:
 #	make -f client.mk build
 # This almost works, but runs into trouble as `level1/level2/mozilla/../release/xulrunner` 
 # isn't evaluated correctly
-	mkdir -p level1/level2
-	ln -s ../../ level1/level2/mozilla
+	mkdir -p level1/level2/mozilla
+	find . -maxdepth 1 -mindepth 1 -not -name level1 -not -name debian -not -name .git -exec cp -r '{}' level1/level2/mozilla \;
+#	ln -s ../../ level1/level2/mozilla
 	cd level1/level2 && make -f mozilla/client.mk build
 
 override_dh_install:
-	dh_install  --sourcedir=level1/level2
+	dh_install  --sourcedir=/tmp
 
 #override_dh_auto_install:
 #	pwd
