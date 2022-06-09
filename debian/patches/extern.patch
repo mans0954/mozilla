@@ -1,0 +1,11 @@
+--- a/embedding/browser/gtk/src/gtkmozembed.h
++++ b/embedding/browser/gtk/src/gtkmozembed.h
+@@ -40,7 +40,7 @@
+ #define gtkmozembed_h
+ 
+ #ifdef __cplusplus
+-extern "C" {
++extern "C++" {
+ #endif /* __cplusplus */
+ 
+ #include <stddef.h>
