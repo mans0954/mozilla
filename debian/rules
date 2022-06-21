@@ -24,6 +24,7 @@ export MOZILLAMODE = release
 export PROD_TEX = 1
 export PRINCEPROD = sw
 export DESTDIR = /usr/lib
+export STAGING = /tmp
 
 %:
 	dh  $@
@@ -49,7 +50,11 @@ override_dh_auto_build:
 	cd level1/level2 && make -f mozilla/client.mk build
 
 override_dh_install:
-	dh_install  --sourcedir=/tmp
+	cp -RL $$STAGING/$$MOZILLAMODE/prince/dist/bin $$STAGING/$$MOZILLAMODE/$$PRINCEPROD
+	cp -RL $$STAGING/$$MOZILLAMODE/xulrunner/dist/bin $$STAGING/$$MOZILLAMODE/$$PRINCEPROD/xulrunner
+	cp $$STAGING/$$MOZILLAMODE/xulrunner/dist/bin/*.gmr $$STAGING/$$MOZILLAMODE/$$PRINCEPROD/
+	ls /tmp/release/sw
+	cd /tmp/release && ./xulrunner/dist/bin/xulrunner --install-app $$PRINCEPROD debian/scientific-word/$$DESTDIR/$$PRINCEPROD $$PRINCEPROD
 
 #override_dh_auto_install:
 #	pwd
