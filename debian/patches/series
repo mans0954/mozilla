@@ -1,3 +1,4 @@
+buffer-overflow.patch
 extern.patch
 pangox.patch
 configure.patch

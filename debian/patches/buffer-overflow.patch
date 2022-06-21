@@ -1,0 +1,43 @@
+Origin: https://bazaar.launchpad.net/~mozillateam/xulrunner/xulrunner-1.9.dev/view/head:/debian/patches/bz412610_att335369_realpath_overflow.patch
+
+--- a/toolkit/mozapps/update/src/updater/updater.cpp
++++ b/toolkit/mozapps/update/src/updater/updater.cpp
+@@ -117,7 +117,9 @@
+ #endif
+ 
+ #ifndef MAXPATHLEN
+-# ifdef MAX_PATH
++# ifdef PATH_MAX
++#  define MAXPATHLEN PATH_MAX
++# elif defined(_MAX_PATH)
+ #  define MAXPATHLEN MAX_PATH
+ # elif defined(_MAX_PATH)
+ #  define MAXPATHLEN _MAX_PATH
+--- a/toolkit/xre/nsAppRunner.h
++++ b/toolkit/xre/nsAppRunner.h
+@@ -40,10 +40,14 @@
+ 
+ #ifdef XP_WIN
+ #include <windows.h>
++#else
++#include <limits.h>
+ #endif
+ 
+ #ifndef MAXPATHLEN
+-#ifdef _MAX_PATH
++#ifdef PATH_MAX
++#define MAXPATHLEN PATH_MAX
++#elif defined(_MAX_PATH)
+ #define MAXPATHLEN _MAX_PATH
+ #elif defined(CCHMAXPATH)
+ #define MAXPATHLEN CCHMAXPATH
+--- a/xpcom/build/nsXPCOMPrivate.h
++++ b/xpcom/build/nsXPCOMPrivate.h
+@@ -231,6 +231,7 @@
+ #define XUL_DLL   "libxul"MOZ_DLL_SUFFIX
+ 
+ #else // Unix
++#include <limits.h> // for PATH_MAX
+ 
+ #define XPCOM_DLL "libxpcom"MOZ_DLL_SUFFIX
+ 
