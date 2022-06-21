@@ -23,8 +23,9 @@ export PROD_SW = 1
 export MOZILLAMODE = release
 export PROD_TEX = 1
 export PRINCEPROD = sw
-export DESTDIR = /usr/lib
-export STAGING = /tmp
+export DESTDIR = usr/lib
+export STAGING = ${PRINCEBASE}
+export DEB_PACKAGE = $(shell pwd)/debian/scientific-word
 
 %:
 	dh  $@
@@ -53,12 +54,10 @@ override_dh_install:
 	cp -RL $$STAGING/$$MOZILLAMODE/prince/dist/bin $$STAGING/$$MOZILLAMODE/$$PRINCEPROD
 	cp -RL $$STAGING/$$MOZILLAMODE/xulrunner/dist/bin $$STAGING/$$MOZILLAMODE/$$PRINCEPROD/xulrunner
 	cp $$STAGING/$$MOZILLAMODE/xulrunner/dist/bin/*.gmr $$STAGING/$$MOZILLAMODE/$$PRINCEPROD/
-	ls /tmp/release/sw
-	cd /tmp/release && ./xulrunner/dist/bin/xulrunner --install-app $$PRINCEPROD debian/scientific-word/$$DESTDIR/$$PRINCEPROD $$PRINCEPROD
+	mkdir -p $$DEB_PACKAGE/$$DESTDIR
+	ls debian/scientific-word
+	ls level1/level2/release
+	cd level1/level2/release && ./xulrunner/dist/bin/xulrunner --install-app $$PRINCEPROD ../../../debian/scientific-word/usr/lib $$PRINCEPROD
+	ls $$DEB_PACKAGE/$$DESTDIR
 
-#override_dh_auto_install:
-#	pwd
-#	ls debian
-#	find debian/tmp
-#	dh_auto_install
-#	./release/xulrunner/dist/bin/xulrunner --install-app $$PRINCEPROD "$$DESTDIR"/$$PRINCEPROD $$PRINCEPROD
+

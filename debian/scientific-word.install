@@ -1,3 +1,0 @@
-release/prince/dist/bin /usr/lib/sw
-release/xulrunner/dist/bin /usr/lib/sw/xulrunner
-release/xulrunner/dist/bin/*.gmr /usr/lib/sw

@@ -39,5 +39,5 @@
 +
 +# ac_add_options --with-system-nss
 +
-+mk_add_options MOZ_OBJDIR=/tmp/release
++mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../release
 +mk_add_options MOZ_MAKE_FLAGS=" -j4"
