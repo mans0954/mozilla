@@ -21,7 +21,8 @@ Homepage: https://github.com/ScientificWord/
 
 Package: scientific-word
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends},
+ libcanberra-gtk-module
 Description: WYSIWYG LaTeX editor
  Scientific Word gives a WYSIWYG-type interface to LaTeX for professional-
  quality mathematical typesetting; it uses true mathematical notation, so you 
