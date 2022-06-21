@@ -15,4 +15,4 @@ prince/utilities/linux/lib/libMagickCore.so.5 export-ignore
 filters/ptprince/funnelweb export-ignore
 **/*.exe export-ignore
 **/*.dll export-ignore
-embedding/browser/activex/src/pluginhostctrl/cab/redist/ATL.DLL
+**/*.DLL export-ignore
