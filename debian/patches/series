@@ -1,19 +1,24 @@
-buffer-overflow.patch
-extern.patch
-pangox.patch
+# Autotools patches 
+# (use provided configure for now)
+# configure-in.patch
+# freetype2-m4.patch
+# jpeg.patch
+
 configure.patch
-funnelweb.patch
-filecase.patch
+mozconfigs.patch
+memory.patch
+pangox.patch
+fix.patch
+coreconf.patch
 mkshlib.patch
 nss.patch
-mozconfigs.patch
-configure-in.patch
-#configure-in269.patch
-memory.patch
-coreconf.patch
-fixcode.patch
-freetype2-m4.patch
-jpeg.patch
-filepicker.patch
-fix.patch
-define.patch
+extern.patch
+filecase.patch
+funnelweb.patch
+
+# The following were needed at one point
+# Not sure why we don't need them now?
+# buffer-overflow.patch
+# fixcode.patch
+# filepicker.patch
+# define.patch
