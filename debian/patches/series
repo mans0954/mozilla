@@ -22,3 +22,5 @@ funnelweb.patch
 # fixcode.patch
 # filepicker.patch
 # define.patch
+
+mathmloverlay.patch
