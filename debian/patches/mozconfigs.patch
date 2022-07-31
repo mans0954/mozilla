@@ -1,6 +1,6 @@
 --- /dev/null
 +++ b/mozconfigs/linux/Prince.mozconfig
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,20 @@
 +# sh
 +# Build configuration script
 +#
@@ -12,9 +12,13 @@
 +
 +. $topsrcdir/prince/config/mozconfig
 +
++CPPFLAGS="-Wno-error=narrowing -I/usr/include/freetype2/"
++HOST_CPPFLAGS="-Wno-error=narrowing -I/usr/include/freetype2/"
++CXXFLAGS="-fpermissive"
++
 +mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../debug
 +mk_add_options MOZ_MAKE_FLAGS=" -j4"
-+ac_add_options --enable-debug							
++ac_add_options --enable-debug
 +ac_add_options --disable-optimize
 +ac_add_options --enable-chrome-format=flat
 --- /dev/null
