@@ -24,3 +24,4 @@ funnelweb.patch
 # define.patch
 
 mathmloverlay.patch
+os-detect.patch

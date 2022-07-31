@@ -1,0 +1,15 @@
+--- a/prince/modules/os.jsm
++++ b/prince/modules/os.jsm
+@@ -16,10 +16,11 @@
+    break;
+   case 'Linux i686':
+   case 'Linux i686 (x86_64)':
++  case 'Linux x86_64':
+    os = 'linux';
+    break;
+   default:
+-   throw('Error: Unknown OS ' + navigator.platform);
++   throw('Error: Unknown OS ' + window.navigator.platform);
+    os = "??";
+   }
+   return os;
