@@ -25,3 +25,4 @@ funnelweb.patch
 
 mathmloverlay.patch
 os-detect.patch
+texlive.patch

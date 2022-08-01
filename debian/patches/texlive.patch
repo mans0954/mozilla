@@ -1,0 +1,9 @@
+--- a/prince/TeX/bin/linux/pdflatex.bash
++++ b/prince/TeX/bin/linux/pdflatex.bash
+@@ -1,6 +1,5 @@
+ #!/bin/bash
+ cd $1 
+-export PATH=/usr/local/texlive/swTexbin/
+ pdflatex main
+ echo done > sentinel
+ 
