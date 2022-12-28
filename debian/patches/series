@@ -8,10 +8,8 @@ configure.patch
 mozconfigs.patch
 memory.patch
 pangox.patch
-fix.patch
 coreconf.patch
 mkshlib.patch
-nss.patch
 extern.patch
 filecase.patch
 funnelweb.patch
@@ -24,5 +22,4 @@ funnelweb.patch
 # define.patch
 
 mathmloverlay.patch
-os-detect.patch
 texlive.patch
