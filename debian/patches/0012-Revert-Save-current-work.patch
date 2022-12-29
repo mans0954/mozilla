@@ -1,0 +1,385 @@
+From: Christopher Hoskin <christopher.hoskin@gmail.com>
+Date: Thu, 29 Dec 2022 15:15:57 +0000
+Subject: Revert "Save current work"
+
+This reverts commit d949d9926f40f2b3ba8183b579c5c17391deb2dc.
+---
+ prince/base/content/dialogs/preferences.js  |  29 --------
+ prince/base/content/dialogs/preferences.xul |  42 +++++------
+ prince/base/content/msiEditor.js            |  11 ++-
+ prince/base/content/prince.xul              |   4 +-
+ prince/prince-prefs.js                      |   8 ---
+ prince/res/Makefile.in                      |  15 ++--
+ prince/res/cm2.html                         | 104 +++++++---------------------
+ 7 files changed, 55 insertions(+), 158 deletions(-)
+
+diff --git a/prince/base/content/dialogs/preferences.js b/prince/base/content/dialogs/preferences.js
+index a5c76f6..137032f 100644
+--- a/prince/base/content/dialogs/preferences.js
++++ b/prince/base/content/dialogs/preferences.js
+@@ -212,35 +212,6 @@ function showShellsInDir(tree)
+     dump(e.toString());
+   }
+ }
+-function showThemeList()
+-{
+-
+-  var namecol = tree.columns.getNamedColumn('Name');
+-
+-  var themelist;
+-  var themeuri = msiURIFromString("resource://res/themes-list.js");
+-  try {
+-    themelist = getTextFileAsString(themeuri);
+-    var items = themelist.split(",");
+-    var name;
+-    var listItem;
+-    var regexp = /\.css$/;
+-    var listbox = document.getElementById("themelist");
+-    while (listbox.itemCount > 0) listbox.removeItemAt(0);
+-    while (items.hasMoreElements()) {
+-      var item = items.getNext();
+-      if (regexp.test(item))
+-      {
+-        name = item.replace(regexp,'');
+-        listItem = listbox.appendItem(name, item.path);
+-      }
+-    }
+-    listbox.selectedIndex =0;
+-  }
+-  catch(e) {
+-    dump(e.toString());
+-  }
+-}
+ 
+ function onShellSelect()
+ {
+diff --git a/prince/base/content/dialogs/preferences.xul b/prince/base/content/dialogs/preferences.xul
+index a8717f0..5dda9ed 100644
+--- a/prince/base/content/dialogs/preferences.xul
++++ b/prince/base/content/dialogs/preferences.xul
+@@ -766,9 +766,6 @@
+       <preference id="sourceminlength"
+                   name="swp.sourceview.minlinelength"
+                   type="int"/>
+-      <preference id="sourcetheme"
+-                  name="swp.sourceview.theme"
+-                  type="string"/>
+     </preferences>
+     <tabbox id="editTabbox" flex="1" persist="selectedIndex" selectedIndex="0">
+ 	    <tabs class="tabs-top">
+@@ -788,30 +785,23 @@
+           </groupbox>
+           <groupbox>
+             <caption>&SourceEditing.label;</caption>
+-          	<hbox>
+-	            <grid><columns><column/><column/><column flex="1"/></columns>
+-	              <rows>
+-	                <row align="center">
+-	                  <description>&XMLSourceIndent.label;</description>
+-	                  <textbox type="number" id="srcindent" class="medwidth" preference="sourceindent"/>
+-	                </row>
+-	                <row align="center">
+-	                  <description>&XMLSourceMaxLineLength.label;</description>
+-	                  <textbox type="number" id="srcmaxlength" class="medwidth" preference="sourcemaxlength"/>
+-	                </row>
+-	                <row align="center">
+-	                  <description>&XMLSourceMinLineLength.label;</description>
+-	                  <textbox type="number" id="srcminlength" class="medwidth" preference="sourceminlength"/>
+-	                </row>
+-	              </rows>
+-	            </grid>
+-	            <vbox style="width:2in" >
+-                   <label value="themes"/>
+-                   <listbox preference="sourcetheme" flex = "1" id="themeselect"/>
+-                 </vbox>
+-	        </hbox>
++            <grid><columns><column/><column/><column flex="1"/></columns>
++              <rows>
++                <row align="center">
++                  <description>&XMLSourceIndent.label;</description>
++                  <textbox type="number" id="srcindent" class="medwidth" preference="sourceindent"/>
++                </row>
++                <row align="center">
++                  <description>&XMLSourceMaxLineLength.label;</description>
++                  <textbox type="number" id="srcmaxlength" class="medwidth" preference="sourcemaxlength"/>
++                </row>
++                <row align="center">
++                  <description>&XMLSourceMinLineLength.label;</description>
++                  <textbox type="number" id="srcminlength" class="medwidth" preference="sourceminlength"/>
++                </row>
++              </rows>
++            </grid>
+           </groupbox>
+-
+           <groupbox orient="vertical">
+             <caption>&Spacebar.label;</caption>
+             <radiogroup id="doublespace" preference="doublespacepref">
+diff --git a/prince/base/content/msiEditor.js b/prince/base/content/msiEditor.js
+index f0438ee..04ca125 100755
+--- a/prince/base/content/msiEditor.js
++++ b/prince/base/content/msiEditor.js
+@@ -4143,7 +4143,8 @@ function KeyPressCallback(aEvent)
+           var xferable = Components.classes["@mozilla.org/widget/transferable;1"].
+                          createInstance(Components.interfaces.nsITransferable);
+           xferable.addDataFlavor("text/unicode");
+-          var s = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
++          var s = Components.classes["@mozilla.org/supports-string;1"].
++                  createInstance(Components.interfaces.nsISupportsString);
+           s.data = selection;
+           xferable.setTransferData("text/unicode", s, selection.length * 2);
+           clipboardSvc.setData(xferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard);
+@@ -4171,7 +4172,7 @@ function msiSetEditMode(mode, editorElement) {
+   // must have editor if here!
+   var editor = msiGetEditor(editorElement);
+   var sourceIframe = document.getElementById("content-source");
+-  sourceIframe.setAttribute("src", "resource://app/res/cm2.html");
++  var sourceEditor = sourceIframe.contentWindow.gEditor;
+ 
+   // Switch the UI mode before inserting contents
+   //   so user can't type in source window while new window is being filled
+@@ -4193,8 +4194,7 @@ function msiSetEditMode(mode, editorElement) {
+     var start = 0;
+     sourceIframe.contentWindow.gChangeCallback = null; //onSourceChangeCallback;
+ 
+-    var theme = GetStringPref("swp.sourceview.theme");
+-    if (theme == null) theme = "elegant";
++    var theme = "neat";
+     var tagManager = editor.tagListManager;
+     var tagsArray = [].concat(
+       tagManager.getTagsInClass('hidden', ',', false).split(','),
+@@ -4206,7 +4206,7 @@ function msiSetEditMode(mode, editorElement) {
+       tagManager.getTagsInClass('envtag', ',', false).split(','),
+       tagManager.getTagsInClass('frontmtag', ',', false).split(','));
+ 
+-    sourceIframe.contentWindow.installCodeMirror(KeyPressCallback, ChangeCallback, ActivityCallback,
++    sourceIframe.contentWindow./*wrappedJSObject.*/installCodeMirror(KeyPressCallback, ChangeCallback, ActivityCallback,
+       theme,
+       tagsArray,
+       null);
+@@ -4214,7 +4214,6 @@ function msiSetEditMode(mode, editorElement) {
+     var lastEditableChild = editor.document.body.lastChild;
+     if (lastEditableChild.nodeType == Node.TEXT_NODE)
+       lastEditableChild.data = lastEditableChild.data.replace(/\s*$/, "\n");
+-    var sourceEditor = sourceIframe.contentWindow.gEditor;
+     sourceEditor.setValue(source.replace(/\r\n/g, "\n").replace(/\r/g, "\n"));
+     sourceIframe.focus();
+     sourceEditor.refresh();
+diff --git a/prince/base/content/prince.xul b/prince/base/content/prince.xul
+index 2e6f153..1a21722 100644
+--- a/prince/base/content/prince.xul
++++ b/prince/base/content/prince.xul
+@@ -99,8 +99,8 @@
+                 "nsDragAndDrop.drop(event, fragObserver);"/>
+       <vbox>
+         <label id="doctype-text" crop="right"></label>
+-        <iframe id="content-source" src="resource://app/res/cm2.html"
+-                flex="1" tooltip="aSourceTooltip"/>
++        <iframe id="content-source"
++                src="resource://app/res/cm2.html" flex="1" tooltip="aSourceTooltip"/>
+       </vbox>
+ #ifdef PROD_TEX
+       <browser id="preview-frame" src="about:blank" disablehistory="1" flex="1"/>
+diff --git a/prince/prince-prefs.js b/prince/prince-prefs.js
+index 62eecb9..17eb5bc 100644
+--- a/prince/prince-prefs.js
++++ b/prince/prince-prefs.js
+@@ -237,14 +237,6 @@ pref("swp.sci.compression", 0);
+ pref("swp.sourceview.indentincrement",       2);
+ pref("swp.sourceview.maxlinelength",        100);
+ pref("swp.sourceview.minlinelength",         60);
+-pref("swp.sourceview.theme",         "zenburn");
+-/* Theme choices currently are:
+-"3024-day","3024-night","ambiance-mobile","ambiance","base16-dark","base16-light",
+-"blackboard","cobalt","colorforth","eclipse","elegant","erlang-dark","lesser-dark",
+-"liquibyte","mbo","mdn-like","midnight","monokai","neat","neo","night","paraiso-dark",
+-"paraiso-light","pastel-on-dark","rubyblue","solarized","the-matrix",
+-"tomorrow-night-bright","tomorrow-night-eighties","twilight","vibrant-ink",
+-"xq-dark","xq-light","zenburn"*/
+ pref("swp.space.after.space", "nil");
+ pref("swp.spellchecker.enablerealtimespell", true);
+ pref("swp.viewPDF","default");
+diff --git a/prince/res/Makefile.in b/prince/res/Makefile.in
+index 8c7f3d0..6cfd95a 100644
+--- a/prince/res/Makefile.in
++++ b/prince/res/Makefile.in
+@@ -16,19 +16,15 @@ FRAG_RESOURCES := $(wildcard $(srcdir)/fragments/*.frg)
+ CONSTANTS1_RESOURCES := $(wildcard $(srcdir)/fragments/Constants1/*.frg)
+ CONSTANTS2_RESOURCES := $(wildcard $(srcdir)/fragments/Constants2/*.frg)
+ CONSTANTS3_RESOURCES := $(wildcard $(srcdir)/fragments/Constants3/*.frg)
+-# CM2_RESOURCES := $(wildcard $(srcdir)/cm2/*)
+-CM_RESOURCES := $(wildcard $(srcdir)/codemirror/*)
++CM2_RESOURCES := $(wildcard $(srcdir)/cm2/*)
++ACE_RESOURCES := $(wildcard $(srcdir)/ace/*)
+ 
+ 
+-libs::	$(CSS_RESOURCES) $(XBL_RESOURCES) $(CM2_RESOURCES) $(CM_RESOURCES) $(ACE_RESOURCES)
++libs::	$(CSS_RESOURCES) $(XBL_RESOURCES) $(CM2_RESOURCES) $(ACE_RESOURCES)
+ 	$(INSTALL)	$(CSS_RESOURCES)	$(FINAL_TARGET)/res/css
+ 	$(INSTALL)	$(TAGDEF_RESOURCES)	$(FINAL_TARGET)/res/tagdefs
+ 	$(INSTALL)	$(XML_RESOURCES)	$(FINAL_TARGET)/res/xml
+ 	$(INSTALL)	$(FRAG_RESOURCES)	$(FINAL_TARGET)/res/fragments
+-#	$(INSTALL)  $(CM2_RESOURCES) 	$(FINAL_TARGET)/res/cm2
+-	$(INSTALL)  $(CM_RESOURCES) 	$(FINAL_TARGET)/res/codemirror
+-	$(INSTALL)  $(srcdir)/cm2.html  $(FINAL_TARGET)/res/
+-	$(INSTALL)	$(ICON_RESOURCES)	$(FINAL_TARGET)/res/css/
+ # The next line forces creation of the Constants directory if necessary
+ 	- mkdir $(FINAL_TARGET)/res/fragments/Constants
+ 	- cp $(srcdir)/fragments/Constants1/*.frg	$(FINAL_TARGET)/res/fragments/Constants
+@@ -44,7 +40,10 @@ ifdef MOZ_MSI_TEX
+ 	- mkdir $(FINAL_TARGET)/res/fragments/XeTeXonly
+ 	- cp $(srcdir)/fragments/XeTeXonly/*.frg $(FINAL_TARGET)/res/fragments/XeTeXonly
+ endif
+-
++	$(INSTALL)  $(CM2_RESOURCES) 	$(FINAL_TARGET)/res/cm2
++	$(INSTALL)  $(srcdir)/cm2.html  $(FINAL_TARGET)/res/
++	$(INSTALL)  $(ACE_RESOURCES) 	$(FINAL_TARGET)/res/ace/
++	$(INSTALL)	$(ICON_RESOURCES)	$(FINAL_TARGET)/res/css/
+ 				  
+ 
+ 
+diff --git a/prince/res/cm2.html b/prince/res/cm2.html
+index 13ca6f1..4402ab7 100644
+--- a/prince/res/cm2.html
++++ b/prince/res/cm2.html
+@@ -16,88 +16,34 @@
+     .CodeMirror-scroll {height: 100% ! important}
+     .CodeMirror-gutter {cursor: pointer;}
+   </style>
+-  <script src="codemirror/lib/codemirror.js" type="text/javascript" ></script>
++  <link rel="stylesheet" href="cm2/codemirror.css" />
++  <link rel="stylesheet" href="cm2/foldtag.css" />
+ 
+-  <link rel="stylesheet" href="codemirror/lib/codemirror.css" />
+-  <link rel="stylesheet" href="codemirror/theme/3024-day.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/3024-night.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/ambiance-mobile.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/ambiance.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/base16-dark.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/base16-light.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/blackboard.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/cobalt.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/colorforth.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/eclipse.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/elegant.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/erlang-dark.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/lesser-dark.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/mbo.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/mdn-like.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/midnight.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/monokai.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/neat.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/neo.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/night.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/paraiso-dark.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/paraiso-light.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/pastel-on-dark.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/rubyblue.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/solarized.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/the-matrix.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/tomorrow-night-bright.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/tomorrow-night-eighties.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/twilight.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/vibrant-ink.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/xq-dark.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/xq-light.css"/>
+-  <link rel="stylesheet" href="codemirror/theme/zenburn.css"/>
++  <script src="cm2/codemirror.js" type="text/javascript" ></script>
++  <script src="cm2/searchcursor.js" type="text/javascript" ></script>
++  <script src="cm2/foldtag.js" type="text/javascript" ></script>
++  <script src="cm2/xml.js" type="text/javascript" ></script>
++  <script src="cm2/javascript.js" type="text/javascript" ></script>
++  <script src="cm2/css.js" type="text/javascript" ></script>
++  <script src="cm2/htmlmixed.js" type="text/javascript" ></script>
+ 
+-  <link rel="stylesheet" href="codemirror/addon/hint/show-hint.css"/>
+-  
+-  <link rel="stylesheet" href="codemirror/addon/fold/foldgutter.css" />
+-
+- <script src="codemirror/addon/selection/active-line.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/edit/closetag.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/fold/foldcode.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/fold/foldgutter.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/fold/brace-fold.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/fold/xml-fold.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/fold/indent-fold.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/fold/markdown-fold.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/fold/comment-fold.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/fold/xml-fold.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/edit/matchtags.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/hint/show-hint.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/hint/xml-hint.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/hint/html-hint.js" type="text/javascript"></script>
+-  <script src="codemirror/addon/search/searchcursor.js" type="text/javascript"></script>
+-
+-  <script src="codemirror/addon/search/search.js" type="text/javascript" ></script>
+-  <script src="codemirror/addon/dialog/dialog.js" type="text/javascript" ></script>
+-  <script src="codemirror/addon/fold/foldtag.js" type="text/javascript" ></script>
+-  <script src="codemirror/mode/xml/xml.js" type="text/javascript" ></script>
+-  <script src="codemirror/mode/css/css.js" type="text/javascript" ></script>
+-  <script src="codemirror/mode/htmlmixed/htmlmixed.js" type="text/javascript" ></script> 
+-<!-- 
+   <script src="cm2/jquery.min.js"></script>
+   <script src="cm2/poptags.js"></script>
+   <script src="cm2/pophtmlmixed.js"></script>
+   
+   <script src="cm2/code-completion.js"></script>
+   <script src="cm2/css-completion.js"></script>
+-  <script src="cm2/html-completion.js"></script> -->
++  <script src="cm2/html-completion.js"></script>
+ 
+-
+-  <link rel="stylesheet" id="theme" type="text/css" href="codemirror/theme/cobalt.css" />
+-<!--   <link rel="stylesheet" id="theme" type="text/css" href="cm2/eclipse.css" />
++  <link rel="stylesheet" id="theme" type="text/css" href="cm2/cobalt.css" />
++  <link rel="stylesheet" id="theme" type="text/css" href="cm2/eclipse.css" />
+   <link rel="stylesheet" id="theme" type="text/css" href="cm2/elegant.css" />
+   <link rel="stylesheet" id="theme" type="text/css" href="cm2/light.css" />
+   <link rel="stylesheet" id="theme" type="text/css" href="cm2/monokai.css" />
+   <link rel="stylesheet" id="theme" type="text/css" href="cm2/neat.css" />
+   <link rel="stylesheet" id="theme" type="text/css" href="cm2/night.css" />
+-  <link rel="stylesheet" id="theme" type="text/css" href="cm2/rubyblue.css" /> -->
+-<!-- <link rel="stylesheet"            type="text/css" href="cm2/code-completion.css"> -->  
++  <link rel="stylesheet" id="theme" type="text/css" href="cm2/rubyblue.css" />
++  <link rel="stylesheet"            type="text/css" href="cm2/code-completion.css">  
+ </head>
+ <body>
+ 
+@@ -106,7 +52,7 @@
+   var gEditor = null;
+   var gChangeCallback = null;
+   var gChangeTimer = null;
+-  var gTheme  = "elegant";
++  var gTheme  = "monokai";
+ 
+   var gModificationCount = 0;
+ 
+@@ -151,19 +97,19 @@
+           hlLine = gEditor.setLineClass(gEditor.getCursor().line, "activeline");
+         }
+       });
+-      var htmlCompletion = new CodeCompletion(gEditor, new HtmlCompletion());
+-      var cssCompletion = new CodeCompletion(gEditor, new CssCompletion({local: true}));
++      // var htmlCompletion = new CodeCompletion(gEditor, new HtmlCompletion());
++      // var cssCompletion = new CodeCompletion(gEditor, new CssCompletion({local: true}));
+       gEditor.setOption("onKeyEvent", function(cm, e) {
+           var cursor = cm.getCursor();
+           var token = cm.getTokenAt(cursor);
+-          switch (token.state.mode) {
+-            case "html":
+-              return htmlCompletion.handleKeyEvent(cm, e);
+-            case "css":
+-              return cssCompletion.handleKeyEvent(cm, e);
+-
+-            default: break;              
+-          }
++          // switch (token.state.mode) {
++          //   case "html":
++          //     return htmlCompletion.handleKeyEvent(cm, e);
++          //   case "css":
++          //     return cssCompletion.handleKeyEvent(cm, e);
++
++          //   default: break;              
++          // }
+           return false;
+       });
+       /*gEditor.setOption("onKeyEvent", function(cm, e) {

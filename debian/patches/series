@@ -9,3 +9,4 @@ filecase.patch
 funnelweb.patch
 mathmloverlay.patch
 texlive.patch
+0012-Revert-Save-current-work.patch
