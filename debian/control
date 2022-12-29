@@ -3,7 +3,7 @@ Section: unknown
 Priority: optional
 Maintainer: Christopher Hoskin <mans0954@debian.org>
 Build-Depends: debhelper-compat (= 12), autotools-dev,
- python2,
+ python3,
  zip,
  libgtk2.0-dev,
  libdbus-glib-1-dev,

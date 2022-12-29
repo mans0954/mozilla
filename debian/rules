@@ -27,6 +27,7 @@ export DESTDIR = usr/lib
 export STAGING = ${PRINCEBASE}
 export DEB_PACKAGE = $(shell pwd)/debian/scientific-word
 
+export PYTHON=python3
 %:
 	dh  $@
 
