@@ -1,3 +1,13 @@
+From: Christopher Hoskin <mans0954@debian.org>
+Date: Thu, 29 Dec 2022 15:07:10 +0000
+Subject: mathmloverlay
+
+---
+ prince/base/content/prince-overlays.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/prince/base/content/prince-overlays.inc b/prince/base/content/prince-overlays.inc
+index c54555b..58a5e39 100644
 --- a/prince/base/content/prince-overlays.inc
 +++ b/prince/base/content/prince-overlays.inc
 @@ -3,7 +3,7 @@

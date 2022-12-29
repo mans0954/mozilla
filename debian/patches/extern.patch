@@ -1,3 +1,13 @@
+From: Christopher Hoskin <mans0954@debian.org>
+Date: Thu, 29 Dec 2022 15:07:10 +0000
+Subject: extern
+
+---
+ embedding/browser/gtk/src/gtkmozembed.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/embedding/browser/gtk/src/gtkmozembed.h b/embedding/browser/gtk/src/gtkmozembed.h
+index 8625798..aca0040 100644
 --- a/embedding/browser/gtk/src/gtkmozembed.h
 +++ b/embedding/browser/gtk/src/gtkmozembed.h
 @@ -40,7 +40,7 @@

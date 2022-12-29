@@ -1,6 +1,17 @@
+From: Christopher Hoskin <mans0954@debian.org>
+Date: Thu, 29 Dec 2022 15:07:09 +0000
+Subject: memory
+
+---
+ configure    | 2 +-
+ configure.in | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index 2370a75..6949288 100755
 --- a/configure
 +++ b/configure
-@@ -6189,7 +6189,7 @@
+@@ -6189,7 +6189,7 @@ EOF
                                        # when using DWARF2 as the debugging
                                        # format)
  
@@ -9,9 +20,11 @@
  
      case "${target_cpu}" in
      alpha*)
+diff --git a/configure.in b/configure.in
+index 80710ce..8b557b9 100644
 --- a/configure.in
 +++ b/configure.in
-@@ -1738,7 +1738,7 @@
+@@ -1738,7 +1738,7 @@ case "$target" in
                                        # when using DWARF2 as the debugging
                                        # format)
  

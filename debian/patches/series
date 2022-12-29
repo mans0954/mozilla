@@ -1,9 +1,3 @@
-# Autotools patches 
-# (use provided configure for now)
-# configure-in.patch
-# freetype2-m4.patch
-# jpeg.patch
-
 configure.patch
 mozconfigs.patch
 memory.patch
@@ -13,13 +7,5 @@ mkshlib.patch
 extern.patch
 filecase.patch
 funnelweb.patch
-
-# The following were needed at one point
-# Not sure why we don't need them now?
-# buffer-overflow.patch
-# fixcode.patch
-# filepicker.patch
-# define.patch
-
 mathmloverlay.patch
 texlive.patch

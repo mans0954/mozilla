@@ -1,28 +1,20 @@
---- a/xulrunner/app/Makefile.in
-+++ b/xulrunner/app/Makefile.in
-@@ -286,7 +286,7 @@
- 	rm -rf $(DIST)/$(FRAMEWORK_NAME).framework
- endif
- 
--README_FILE = $(topsrcdir)/README.md
-+README_FILE = $(topsrcdir)/readme.md
- 
- libs::
- 	$(SYSINSTALL) $(README_FILE) $(DIST)/bin
---- a/prince/base/content/prince.xul
-+++ b/prince/base/content/prince.xul
-@@ -55,7 +55,7 @@
- # All sets except for popupsets (commands, keys, stringbundles and broadcasters) *must* go into the
- # prince-sets.inc file for sharing with hiddenWindow.xul.
- #include prince-sets.inc
--#include editorKeys.inc
-+#include editorkeys.inc
- 
- 
- 
+From: Christopher Hoskin <mans0954@debian.org>
+Date: Thu, 29 Dec 2022 15:07:10 +0000
+Subject: filecase
+
+---
+ prince/base/content/jar.mn                 | 2 +-
+ prince/base/content/mathmlOverlay.xul      | 2 +-
+ prince/base/content/prince.xul             | 2 +-
+ prince/sidebar/symbols/content/symbols.xul | 2 +-
+ xulrunner/app/Makefile.in                  | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/prince/base/content/jar.mn b/prince/base/content/jar.mn
+index d596918..2907f78 100644
 --- a/prince/base/content/jar.mn
 +++ b/prince/base/content/jar.mn
-@@ -18,7 +18,7 @@
+@@ -18,7 +18,7 @@ prince.jar:
  * content/toolbarsOverlay.xul       (toolbarsOverlay.xul)
  * content/toolbarsOverlay.js        (toolbarsOverlay.js)
  * content/mathmlOverlay.js          (mathmlOverlay.js)
@@ -31,6 +23,8 @@
  * content/computeOverlay.js         (computeOverlay.js)
  * content/computeUtils.js           (ComputeUtils.js)
  * content/whitespaceUtils.js        (WhitespaceUtils.js)
+diff --git a/prince/base/content/mathmlOverlay.xul b/prince/base/content/mathmlOverlay.xul
+index a8cf617..c2588f6 100644
 --- a/prince/base/content/mathmlOverlay.xul
 +++ b/prince/base/content/mathmlOverlay.xul
 @@ -917,7 +917,7 @@
@@ -42,6 +36,21 @@
        </tabpanel>        
        <tabpanel id='cachepanel2' observers="cachepanel"/>
  
+diff --git a/prince/base/content/prince.xul b/prince/base/content/prince.xul
+index 442a29d..2e6f153 100644
+--- a/prince/base/content/prince.xul
++++ b/prince/base/content/prince.xul
+@@ -55,7 +55,7 @@
+ # All sets except for popupsets (commands, keys, stringbundles and broadcasters) *must* go into the
+ # prince-sets.inc file for sharing with hiddenWindow.xul.
+ #include prince-sets.inc
+-#include editorKeys.inc
++#include editorkeys.inc
+ 
+ 
+ 
+diff --git a/prince/sidebar/symbols/content/symbols.xul b/prince/sidebar/symbols/content/symbols.xul
+index 032da41..d68de1f 100644
 --- a/prince/sidebar/symbols/content/symbols.xul
 +++ b/prince/sidebar/symbols/content/symbols.xul
 @@ -773,7 +773,7 @@
@@ -53,3 +62,16 @@
        </tabpanel>
        <tabpanel id="cachepanel" context="symbol-context-menu" mathsym="false" align="baseline" ondragdrop = "nsDragAndDrop.drop(event, symObserver);" ondragover="nsDragAndDrop.dragOver(event, symObserver);"
          persist="userlistofsymbols" userlistofsymbols=" symbolpi symboltheta symbolinfty symbolin symbolrightarrow symbolell symbolnabla symbolpartial symbolleq symbolgeq symbolsubset symbolcap symbolcup symboltimes symboldiv symbolpm symbolcirc symbolcdot ">
+diff --git a/xulrunner/app/Makefile.in b/xulrunner/app/Makefile.in
+index 1938fc3..b239e43 100644
+--- a/xulrunner/app/Makefile.in
++++ b/xulrunner/app/Makefile.in
+@@ -286,7 +286,7 @@ clean clobber::
+ 	rm -rf $(DIST)/$(FRAMEWORK_NAME).framework
+ endif
+ 
+-README_FILE = $(topsrcdir)/README.md
++README_FILE = $(topsrcdir)/readme.md
+ 
+ libs::
+ 	$(SYSINSTALL) $(README_FILE) $(DIST)/bin

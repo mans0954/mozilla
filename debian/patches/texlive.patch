@@ -1,3 +1,13 @@
+From: Christopher Hoskin <mans0954@debian.org>
+Date: Thu, 29 Dec 2022 15:07:10 +0000
+Subject: texlive
+
+---
+ prince/TeX/bin/linux/pdflatex.bash | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/prince/TeX/bin/linux/pdflatex.bash b/prince/TeX/bin/linux/pdflatex.bash
+index 22017a2..72667e4 100755
 --- a/prince/TeX/bin/linux/pdflatex.bash
 +++ b/prince/TeX/bin/linux/pdflatex.bash
 @@ -1,6 +1,5 @@

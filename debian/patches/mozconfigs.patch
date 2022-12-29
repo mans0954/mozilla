@@ -1,3 +1,17 @@
+From: Christopher Hoskin <mans0954@debian.org>
+Date: Thu, 29 Dec 2022 15:07:09 +0000
+Subject: mozconfigs
+
+---
+ mozconfigs/linux/Prince.mozconfig        | 20 ++++++++++++++++++++
+ mozconfigs/linux/PrinceRelease.mozconfig | 21 +++++++++++++++++++++
+ 2 files changed, 41 insertions(+)
+ create mode 100644 mozconfigs/linux/Prince.mozconfig
+ create mode 100644 mozconfigs/linux/PrinceRelease.mozconfig
+
+diff --git a/mozconfigs/linux/Prince.mozconfig b/mozconfigs/linux/Prince.mozconfig
+new file mode 100644
+index 0000000..6d8a105
 --- /dev/null
 +++ b/mozconfigs/linux/Prince.mozconfig
 @@ -0,0 +1,20 @@
@@ -21,6 +35,9 @@
 +ac_add_options --enable-debug
 +ac_add_options --disable-optimize
 +ac_add_options --enable-chrome-format=flat
+diff --git a/mozconfigs/linux/PrinceRelease.mozconfig b/mozconfigs/linux/PrinceRelease.mozconfig
+new file mode 100644
+index 0000000..ad228e0
 --- /dev/null
 +++ b/mozconfigs/linux/PrinceRelease.mozconfig
 @@ -0,0 +1,21 @@
